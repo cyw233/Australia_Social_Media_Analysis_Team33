@@ -1,0 +1,269 @@
+<!DOCTYPE>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- support phones and tablets -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+      <title>Australian Social Media Analytics</title>
+      <!-- modernizr -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+      <!-- font script -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" integrity="sha384-p2jx59pefphTFIpeqCcISO9MdVfIm4pNnsL08A6v5vaQc4owkQqxMV8kg4Yvhaw/" crossorigin="anonymous">
+      <!-- bootstrap css script -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+      <!-- d3 js script -->
+      <script src="https://d3js.org/d3.v5.min.js"></script>
+      <!-- self-defined css -->
+      <link rel="stylesheet" type="text/css" href="/stylesheet/header.css">
+      <link rel="stylesheet" type="text/css" href="/stylesheet/happy.css">
+  </head>
+  <body>
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="/home"><h4>AU Social Media Analysis</h4></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/home/happy"><h5>Scenario 1</h5></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/home/airline"><h5>Scenario 2</h5></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/home/venues"><h5>Scenario 3</h5></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div class="main">
+           <span class="outer">
+            <ul>
+              <li id="A"><h5>Adelaide</h5></li>
+              <li id="B"><h5>Brisbane</h5></li>
+              <li id="C"><h5>Canberra</h5></li>
+              <li id="D"><h5>Darwin</h5></li>
+              <li id="H"><h5>Hobart</h5></li>
+              <li id="M"><h5>Melbourne</h5></li>
+              <li id="P"><h5>Perth</h5></li>
+              <li id="S"><h5>Sydney</h5></li>
+            </ul>
+          </span>
+        </div>
+        
+		    <footer class="footer">
+          <div class="container">          
+            <span class="text-muted">&copyMadeByGroup33; Yangyang Luo, Chenyang Wang, Chenyang Gao, Naijun Wang, Xiaoming Zhang 2018 | <a href="/">Home</a></span>
+          </div>
+        </footer>
+
+      <!-- jQuery CDN -->
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+    <!-- self-defined css -->
+	<link rel="stylesheet" type="text/css" href="/stylesheet/footer.css">
+	  <!-- create passing data for js -->
+  			<% var ejsData = []; %>
+  			<% data.forEach(function(city){ 
+				var object = {
+					city:city.value.city, 
+					gdp:city.value.gdp,
+					mid:[city.value.midP, city.value.midN],
+					mor:[city.value.morP, city.value.morN],
+					aft:[city.value.aftP, city.value.aftN],
+					nig:[city.value.nigP, city.value.nigN]
+				} 
+				ejsData.push(object); 
+			   }) %>
+  	<!-- draw d3 chart -->
+  	<script type="text/javascript">
+		  var data = <%- JSON.stringify(ejsData) %>;
+      //Three dimensions of data to visualize
+      function key(d) {return d.city;}
+      function gdp(d) {return d.gdp;}
+      function x(d) {
+        return d.pos;
+      }
+      function y(d) {
+        return d.neg
+      }
+
+  		//Chart dimensions
+  		var margin = {top:19.5, right:19.5, bottom:19.5, left:39.5},
+  		    width = 960 - margin.right;
+		      height = 500 - margin.top - margin.bottom;
+
+  		//Create scale functions
+  		var xScale = d3.scaleLinear()
+ 			           .domain([25, 55])
+  			           .range([0, width]);
+  		var yScale = d3.scaleLinear()
+  					   .domain([5, 37])
+  			     	   .range([height, 0]);
+  	  var rScale = d3.scaleSqrt()
+  	        		   .domain([35000, 103800])
+  	        		   .range([0, 40])
+  	  var colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+  		//Define X axis
+  		var xAxis = d3.axisBottom().scale(xScale);
+  		//Define Y axis
+  		var yAxis = d3.axisLeft().scale(yScale);
+  		//Create SVG element
+  		var svg = d3.select(".main")
+  					.append("svg")
+  					.attr("width", width + margin.left + margin.right)
+  					.attr("height", height + margin.top + margin.bottom)
+  					.append("g")
+  					.attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+  					
+  		//Create X axis
+  		svg.append("g")
+  		   .attr("class", "x axis")
+  		   .attr("transform", "translate(0," + height + ")")
+  		   .call(xAxis);
+  		//Create Y axis
+  		svg.append("g")
+  		   .attr("class", "y axis")
+  		   .call(yAxis);
+  		//Add an y-axis label.
+  		svg.append("text")
+  		   .attr("class", "y label")
+  		   .attr("test-anchor", "end")
+  		   .attr("x", -90)
+  		   .attr("y", -40)
+  		   .attr("dy", ".75em")
+  		   .attr("transform", "rotate(-90)")
+  		   .text("Negative rate")
+  		//Add an y-axis label.
+  		svg.append("text")
+  		   .attr("class", "x label")
+  		   .attr("test-anchor", "end")
+  		   .attr("x", width)
+  		   .attr("y", height - 6)
+  		   .text("Positive rate")
+  		//Add the time label
+  		var label = svg.append("text")
+                     .attr("class", "time label")
+  		           	   .attr("text-anchor", "end")
+  		           	   .attr("y", height - 24)
+  		           	   .attr("x", width - 36)
+  		           	   .text(1);
+      //Add a dot per city
+  		var dot = svg.append("g")
+                   .attr("class", "dots")
+                   .selectAll(".dots")
+                   .data(interpolateData(1)).enter().append("circle")
+                   .attr("class", "dot")
+                   .style("fill", function(d) {return colorScale(gdp(d));})
+                   .call(position)
+                   .sort(order);
+      //Add a title
+      dot.append("title")
+         .text(function(d) {return key(d);});
+
+      //Add an overlay for the time label
+      var box = label.node().getBBox();
+
+      var overlay = svg.append("rect")
+                       .attr("class", "overlay")
+                       .attr("x", box.x)
+                       .attr("y", box.y)
+                       .attr("width", 80)
+                       .attr("height", 80)
+                       .on("mouseover", enableInteraction);
+      //Start a transition based on the time
+      svg.transition()
+         .duration(5000)
+         .ease(d3.easeLinear)
+         .tween("time", tweenTime)
+         .on("end", enableInteraction);
+
+      //Situate a city by pos_rate and neg_rate
+      function position(dot) {
+        dot.attr("cx", function(d) {return xScale(x(d)); })
+           .attr("cy", function(d) {return yScale(y(d)); })
+           .attr("r", function(d) {return rScale(gdp(d)); })
+      }
+      //
+      function tweenTime() {
+        var time = d3.interpolateNumber(1, 4);
+        return function(t) { displayTime(time(t)); };
+      }
+
+      function displayTime(time) {
+        dot.data(interpolateData(time), key).call(position)
+           .sort(order);
+        label.text(Math.round(time));
+      }
+      //order function
+      function order(x, y) {
+        return gdp(y) - gdp(x);
+      }
+      //
+      function interpolateData(time) {
+         var i = Math.round(time);
+         var x = 0;
+         var y = 0;
+         return data.map(function(d) {
+          if (i == 1) {
+              x = d.mid[0];
+              y = d.mid[1]; 
+          }
+          else if (i == 2) {
+              x = d.mor[0];
+              y = d.mor[1]; 
+          }
+          else if (i == 3) {
+              x = d.aft[0];
+              y = d.aft[1]; 
+          }
+          else {
+              x = d.nig[0];
+              y = d.nig[1]; 
+          }
+          return {
+            city: d.city,
+            gdp: d.gdp,
+            pos: x,
+            neg: y
+          }
+        })
+      }
+      //After the transition, you can mouseover to change the time
+      function enableInteraction() {
+        var timeScale = d3.scaleLinear().domain([1, 4])
+                          .range([box.x + 10, box.x + box.width - 10])
+                          .clamp(true);
+
+        svg.transition().duration(0);
+
+        overlay
+            .on("mouseover", mouseover)
+            .on("mouseout", mouseout)
+            .on("mousemove", mousemove)
+            .on("touchmove", mousemove);
+
+        function mouseover() {
+          label.classed("active", true);
+        }
+
+        function mouseout() {
+          label.classed("active", false);
+        }
+
+        function mousemove() {
+          displayTime(timeScale.invert(d3.mouse(this)[0]));
+        }
+      }
+  	</script>
+	</body>
+</html>

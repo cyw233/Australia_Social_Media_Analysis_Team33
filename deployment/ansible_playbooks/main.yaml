@@ -1,0 +1,36 @@
+- hosts: instance1
+  become: yes
+  become_user: root
+
+  roles:
+    - mount
+    - docker
+    - pypack
+
+- hosts: instance2
+  become: yes
+  become_user: root
+
+  roles:
+    - mount
+    - docker
+    - pypack
+
+- hosts: instance3
+  become: yes
+  become_user: root
+
+  roles:
+    - mount
+    - docker
+    - pypack
+
+
+- hosts: instance4
+  become: yes
+  become_user: root
+
+  roles:
+    - mount
+    - docker
+    - nodejs

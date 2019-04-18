@@ -1,0 +1,20 @@
+- hosts: instance1
+  tasks:
+  - copy:
+      src: /Users/colin233/Desktop/clustercloud/Assignment2/Assignment2_Team33/scenario1_sentiment_analysis/What_a_PDF.pdf
+      dest: /home/ubuntu
+
+
+- hosts: instance2
+  tasks:
+  - copy:
+      src: /Users/colin233/Desktop/clustercloud/Assignment2/Assignment2_Team33/scenario1_sentiment_analysis/What_a_PDF.pdf
+      dest: /home/ubuntu
+
+
+- hosts: instance3
+  tasks:
+  - copy:
+      src: /Users/colin233/Desktop/clustercloud/Assignment2/Assignment2_Team33/scenario1_sentiment_analysis/What_a_PDF.pdf
+      dest: /home/ubuntu
+

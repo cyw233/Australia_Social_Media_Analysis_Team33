@@ -1,0 +1,12 @@
+---
+- name: Install newer version nodejs, npm and some required packages on instance4
+  shell: |
+    apt-get update 
+    apt-get upgrade
+    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    apt-get install -y nodejs
+    apt-get install -y npm
+    npm install ejs express d3 body-parser node-couchdb flash --save
+
+
+

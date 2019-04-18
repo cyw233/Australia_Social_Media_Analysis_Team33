@@ -1,0 +1,82 @@
+.main {
+	display: flex;
+	align-items:center;
+	height: 100%;
+}
+
+svg {
+	display: block;
+	margin:0 auto;
+	width: 1100px;
+	height: 500px;
+}
+
+text {
+  font: 15px sans-serif;
+}
+
+.time.label {
+  font: 60px sans-serif;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.label {
+  fill: #777;
+}
+
+.year.label {
+  font: 500 196px "Helvetica Neue";
+  fill: #ddd;
+}
+
+.year.label.active {
+  fill: #aaa;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+  cursor: ew-resize;
+}
+
+li {
+  font-size: 45px;
+}
+
+.outer {
+	padding-left: 45px;
+}
+
+#A {
+	color: rgb(255, 127, 14);
+}
+#B {
+	color: rgb(127, 127, 127);
+}
+#C {
+	color: rgb(148, 103, 189);
+}
+#D {
+	color: rgb(214, 39, 40);
+}
+#H {
+	color: rgb(140, 86, 75);
+}
+#M {
+	color: rgb(31, 119, 180);
+}
+#P {
+	color: rgb(227, 119, 194);
+}
+#S {
+	color: rgb(44, 160, 44);
+}

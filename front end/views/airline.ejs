@@ -1,0 +1,208 @@
+<!DOCTYPE>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- support phones and tablets -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+      <title>Australian Social Media Analytics</title>
+      <!-- modernizr -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+      <!-- font script -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" integrity="sha384-p2jx59pefphTFIpeqCcISO9MdVfIm4pNnsL08A6v5vaQc4owkQqxMV8kg4Yvhaw/" crossorigin="anonymous">
+      <!-- bootstrap css script -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+      <!-- self-defined css -->
+      <link rel="stylesheet" type="text/css" href="/stylesheet/header.css">
+      <link rel="stylesheet" type="text/css" href="/stylesheet/airline.css">
+      <!-- self-defined js -->
+      <script src="/lib/liquidFillGauge.js"></script>
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="/home"><h4>AU Social Media Analysis</h4></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/home/happy"><h5>Scenario 1</h5></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/home/airline"><h5>Scenario 2</h5></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/home/venues"><h5>Scenario 3</h5></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        
+        <div>
+          <span class="outer">
+            <ul>
+              <li id="S"><h4>Singapore</h4></li>
+              <li id="E"><h4>Emirates</h4></li>
+              <li id="T"><h4>Qatar</h4></li>              
+              <li id="J"><h4>Jetstar</h4></li>
+            </ul>
+          </span>
+          <div id="firstRow">
+            <svg id="fillgauge2" width="20%" height="200"></svg>
+            <svg id="fillgauge3" width="20%" height="200"></svg>
+            <svg id="fillgauge4" width="20%" height="200"></svg>
+            <svg id="fillgauge5" width="20%" height="200"></svg>
+          </div>
+          <div id="secondRow">
+            <svg id="fillgauge6" width="20%" height="200"><span></svg>
+            <svg id="fillgauge7" width="20%" height="200"></svg>
+            <svg id="fillgauge8" width="20%" height="200"></svg>
+            <svg id="fillgauge9" width="20%" height="200"></svg>
+          </div>
+          <span class="outer">
+           <ul>
+            <li id="N"><h4>New Zealand</h4></li>
+            <li id="H"><h4>Hawaiian</h4></li>
+            <li id="V"><h4>Virgin</h4></li>
+            <li id="Q"><h4>Qantas</h4></li>
+           </ul>
+          </span>
+        </div>
+        <footer class="footer">
+          <div class="container">
+            <span class="text-muted">&copyMadeByGroup33; Yangyang Luo, Chenyang Wang, Chenyang Gao, Naijun Wang, Xiaoming Zhang 2018 | <a href="/">Home</a></span>
+          </div>
+        </footer>
+
+    <!-- jQuery CDN -->
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+    <!-- self-defined css -->
+    <link rel="stylesheet" type="text/css" href="/stylesheet/footer.css">
+    <!-- create passing data for js -->
+        <% var ejsData = []; %>
+        <% data.forEach(function(airline){ 
+              var object = {
+                airline: airline.value.airline,
+                pos:airline.value.pos,
+                neg:airline.value.neg,
+                neg_rate:airline.value.neg_rate
+              }
+              ejsData.push(object);
+           }) %>
+    <script>
+      var data = <%- JSON.stringify(ejsData) %>;
+      
+      var config1 = liquidFillGaugeDefaultSettings();
+      config1.circleColor = "#8E9479";
+      config1.textColor = "#1b1b1c";
+      config1.waveTextColor = "#1b1b1c";
+      config1.waveColor = "#C2CBA6";
+      config1.circleThickness = 0.1;
+      config1.textVertPosition = 0.5;
+      config1.waveAnimateTime = 1000;
+      var gauge2= loadLiquidFillGauge("fillgauge2", 100-data[0].neg_rate*100, config1);
+      
+      var config2 = liquidFillGaugeDefaultSettings();
+      config2.circleThickness = 0.15;
+      config2.circleColor = "#8A7258";
+      config2.textColor = "#1b1b1c";
+      config2.waveTextColor = "1b1b1c";
+      config2.waveColor = "#FCD0A1";
+      config2.textVertPosition = 0.5;
+      config2.waveAnimateTime = 1000;
+      config2.waveHeight = 0.05;
+      config2.waveAnimate = true;
+      config2.waveOffset = 0.25;
+      config2.waveCount = 3;
+      var gauge3 = loadLiquidFillGauge("fillgauge3", 100-data[1].neg_rate*100, config2);
+      
+      var config3 = liquidFillGaugeDefaultSettings();
+      config3.circleColor = "#978396";
+      config3.textColor = "#1b1b1c";
+      config3.waveTextColor = "#1b1b1c";
+      config3.waveColor = "#A690A4";
+      config3.circleThickness = 0.1;
+      config3.circleFillGap = 0.1;
+      config3.textVertPosition = 0.5;
+      config3.waveAnimateTime = 2000;
+      config3.waveHeight = 0.3;
+      config3.waveCount = 1;
+      var gauge4 = loadLiquidFillGauge("fillgauge4", 100-data[2].neg_rate*100, config3);
+      
+      var config4 = liquidFillGaugeDefaultSettings();
+      config4.circleThickness = 0.15;
+      config4.circleColor = "#45373F";
+      config4.textColor = "#1b1b1c";
+      config4.waveTextColor = "#1b1b1c";
+      config4.waveColor = "#5E4B56";
+      config4.textVertPosition = 0.5;
+      config4.waveAnimateTime = 1000;
+      config4.waveHeight = 0.05;
+      config4.waveAnimate = true;
+      config4.waveOffset = 0.25;
+      config4.waveCount = 3;
+      var gauge5 = loadLiquidFillGauge("fillgauge5", 100-data[3].neg_rate*100, config4);
+      
+      var config5 = liquidFillGaugeDefaultSettings();
+      config5.circleColor = "#BDC63D";
+      config5.textColor = "#1b1b1c";
+      config5.waveTextColor = "#1b1b1c";
+      config5.waveColor = "#E6F14A";
+      config5.textVertPosition = 0.5;
+      config5.waveAnimateTime = 1000;
+      config5.circleThickness = 0.1;
+      var gauge6 = loadLiquidFillGauge("fillgauge6", 100-data[4].neg_rate*100, config5);
+      
+      var config6 = liquidFillGaugeDefaultSettings();
+      config6.circleThickness = 0.15;
+      config6.circleColor = "#76D46E";
+      config6.textColor = "#1b1b1c";
+      config6.waveTextColor = "#1b1b1c";
+      config6.waveColor = "#8CEB85";
+      config6.textVertPosition = 0.5;
+      config6.waveAnimateTime = 1000;
+      config6.waveHeight = 0.05;
+      config6.waveAnimate = true;
+      config6.waveOffset = 0.25;
+      config6.waveCount = 3;
+      var gauge7 = loadLiquidFillGauge("fillgauge7", 100-data[5].neg_rate*100, config6);
+      
+      var config7 = liquidFillGaugeDefaultSettings();
+      config7.circleColor = "#B2476E";
+      config7.textColor = "#1b1b1c";
+      config7.waveTextColor = "#1b1b1c";
+      config7.waveColor = "#D05481";
+      config7.circleThickness = 0.1;
+      config7.circleFillGap = 0.1;
+      config7.textVertPosition = 0.5;
+      config7.waveAnimateTime = 2000;
+      config7.waveHeight = 0.3;
+      config7.waveCount = 1;
+      var gauge8 = loadLiquidFillGauge("fillgauge8", 100-data[6].neg_rate*100, config7);
+      
+      var config8 = liquidFillGaugeDefaultSettings();
+      config8.circleColor = "#246D5F";
+      config8.circleThickness = 0.15;
+      config8.circleColor = "#16A4C2";
+      config8.textColor = "#1b1b1c";
+      config8.waveTextColor = "#1b1b1c";
+      config8.waveColor = "#1AC8ED";
+      config8.textVertPosition = 0.5;
+      config8.waveAnimateTime = 1000;
+      config8.waveHeight = 0.05;
+      config8.waveAnimate = true;
+      config8.waveOffset = 0.25;
+      config8.waveCount = 3;
+      var gauge9 = loadLiquidFillGauge("fillgauge9", 100-data[7].neg_rate*100, config8);
+    </script>
+  </body>
+</html>

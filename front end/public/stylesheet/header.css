@@ -1,0 +1,15 @@
+.navbar.navbar-expand-lg.navbar-light{
+	background-color: rgb(12, 41, 89);
+}
+
+.navbar-brand h4{
+	color: white
+}
+
+.navbar-toggler {
+	color: white;
+}
+
+.nav-item h5{
+	color:white;
+}

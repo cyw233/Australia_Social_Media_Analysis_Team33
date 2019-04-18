@@ -1,0 +1,12 @@
+- hosts: instance3
+  gather_facts: false
+
+  tasks:
+  - name: Start running sentiment_analysis.py
+    command: nohup python3 test.py 2>&1 &
+
+  - name: Start running airline_analysis.py
+    command: nohup python3 airline_analysis.py 2>&1 &
+
+  - name: Start running suburb_analysis.py
+    command: nohup python3 suburb_analysis.py 2>&1 &

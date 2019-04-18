@@ -1,0 +1,57 @@
+#firstRow {
+	text-align: center;
+    margin-top: 50px;
+}
+
+#secondRow {
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 25px;
+}
+
+.outer {
+	text-align: center
+}
+
+ul > li {
+    display: inline-block;
+    /* You can also add some margins here to make it look prettier */
+    zoom:1;
+    *display:inline;
+    /* this fix is needed for IE7- */
+}
+
+.outer li {
+	width: 20%;
+}
+
+#S {
+	color: #C2CBA6;
+}
+
+#E {
+	color: #FCD0A1;
+}
+
+#Q {
+	color: #1AC8ED;
+}
+
+#V {
+	color: #D05481;
+}
+
+#N {
+	color: #E6F14A
+}
+#H {
+	color: #8CEB85
+}
+
+#T {
+	color:#A690A4;
+}
+
+#J {
+	color: #5E4B56
+}
